@@ -9,10 +9,9 @@ function fetchUsersList() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
       },
     };
-    return fetch(`${API_ROOT_URL}/posts`, requestOptions).then(response =>
+    return fetch(`${API_ROOT_URL}/users`, requestOptions).then(response =>
       response.json()
     );
   }

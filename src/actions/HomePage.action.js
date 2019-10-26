@@ -5,25 +5,26 @@ export const homePageActions = {
     fetchUsersList,
 }
 
-function fetchUsersList(counsellor_id) {
+function fetchUsersList() {
     return dispatch => {
       dispatch(request());
-      homePageService.fetchUsersList(counsellor_id).then(
-        payload => {
-          dispatch(success(payload));
+      homePageService.fetchUsersList().then(
+        user_list => {
+          dispatch(success(user_list));
         },
-        error => dispatch(failure(error.toString()))
+        response => dispatch(failure(response.toString()))
       );
     };
   
     function request() {
-      return { type: homePageConstants.GETSLOTS_REQUEST };
+      return { type: homePageConstants.USER_LIST_REQUEST };
     }
-    function success(payload) {
-      return { type: homePageConstants.GETSLOTS_SUCCESS, payload };
+    function success(user_list) {
+      console.log(user_list,'RRRR')
+      return { type: homePageConstants.USER_LIST_SUCCESS, user_list };
     }
-    function failure(error) {
-      return { type: homePageConstants.GETSLOTS_FAILURE, error };
+    function failure(user_list) {
+      return { type: homePageConstants.USER_LIST_FAILURE, user_list };
     }
   }
   

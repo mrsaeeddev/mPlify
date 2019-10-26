@@ -5,7 +5,7 @@ const initialstate = {
     userListSuccess: false,
     userListFailure: false,
     loading: false,
-    response: [],
+    user_list: [],
 };
 
 
@@ -26,7 +26,7 @@ export function homePageReducer(state = initialstate, action) {
                 userListRequest: false,
                 userListSuccess: true,
                 userListFailure: false,
-                response: action.response,
+                user_list: action.user_list,
             };
         case homePageConstants.USER_LIST_FAILURE:
             return {
@@ -35,7 +35,7 @@ export function homePageReducer(state = initialstate, action) {
                 userListRequest: false,
                 userListSuccess: false,
                 userListFailure: true,
-                response: action.response,
+                user_list: action.user_list,
             };
         default:
             return state;
