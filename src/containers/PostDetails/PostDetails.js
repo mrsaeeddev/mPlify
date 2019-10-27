@@ -9,6 +9,7 @@ import {
   FlatList,
   ActivityIndicator,
   StyleSheet,
+  TextInput,
   Alert,
   Button
 } from 'react-native';
@@ -23,8 +24,8 @@ const styles = StyleSheet.create({
   },
   modal: {
     width: 320,
-    height: '50%',
-    margin: 20,
+    maxHeight: 260,
+    marginTop: 30,
     backgroundColor: 'white',
   },
   container: {
@@ -53,6 +54,8 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '40%',
+    marginRight: 10,
+    marginLeft: 10,
   },
   com_container: {
     backgroundColor: 'white',
@@ -73,7 +76,21 @@ const styles = StyleSheet.create({
     marginTop: '50%',
     justifyContent: 'center',
     alignContent: "center",
-  }
+  },
+  input_field: { 
+    height: 40,
+    margin: 10,
+    borderColor: 'gray',
+    borderRadius: 7,
+    borderWidth: 1
+  },
+  textarea_field: { 
+    height: 80,
+    borderRadius: 7,
+    margin: 10,
+    borderColor: 'gray',
+    borderWidth: 1
+  },
 });
 
 class PostDetails extends Component {
@@ -124,7 +141,28 @@ class PostDetails extends Component {
         <Modal isVisible={this.state.modalVisible} style={styles.modal}>
           <View style={{ flex: 1 }}>
             <Text style={styles.modal_heading}>Add Comment</Text>
+            <TextInput
+              style={styles.input_field}
+              placeholder="Title"
+              onChangeText={title => this.setState({ title })}
+              value={this.state.title}
+            />
+              <TextInput
+              style={styles.textarea_field}
+              placeholder="Body"
+              multiline={true}
+           numberOfLines={6}
+              onChangeText={body => this.setState({ body })}
+              value={this.state.body}
+            />
+            <View style={styles.btn_container}>
+            <View style={styles.button}>
             <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
+            </View>
+            <View style={styles.button}>
+            <Button  title="Add"></Button>
+            </View>
+            </View>
           </View>
         </Modal>
         <View style={styles.post_details}>
