@@ -5,6 +5,7 @@ import { Alert } from 'react-native';
 export const postDetailsActions = {
     fetchCommentsList,
     deletePost,
+    addComment
 }
 
 function fetchCommentsList(postId) {
@@ -51,5 +52,30 @@ function fetchCommentsList(postId) {
     }
     function failure(response) {
       return { type: postDetailsConstants.POST_DELETE_FAILURE, response };
+    }
+  }
+
+  function addComment(postId,comment) {
+    return dispatch => {
+      dispatch(request());
+      postDetailsService.addComment(postId,comment).then(
+        response => {
+          if (response.status === 201) {
+            dispatch(success({'success':'Comment has been successfully added'}));
+            Alert.alert("Comment has been successfully added");
+          }
+        },
+        response => dispatch(failure({'error':'An error occured in adding the comment'}))
+      );
+    };
+  
+    function request() {
+      return { type: postDetailsConstants.ADD_COMMENT_REQUEST };
+    }
+    function success(add_response) {
+      return { type: postDetailsConstants.ADD_COMMENT_SUCCESS, add_response };
+    }
+    function failure(add_response) {
+      return { type: postDetailsConstants.ADD_COMMENT_FAILURE, add_response };
     }
   }

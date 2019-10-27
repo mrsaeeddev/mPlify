@@ -18,7 +18,9 @@ import { postDetailsActions } from '../../actions/PostDetails.action';
 
 const styles = StyleSheet.create({
   modal_heading: {
-    margin: 10,
+    marginRight: 10,
+    marginTop: 10,
+    marginLeft: 10,
     fontSize: 24,
     fontWeight: '700',
   },
@@ -55,6 +57,7 @@ const styles = StyleSheet.create({
   button: {
     width: '40%',
     marginRight: 10,
+    marginTop: 10,
     marginLeft: 10,
   },
   com_container: {
@@ -78,8 +81,12 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   input_field: { 
-    height: 40,
-    margin: 10,
+    height: 35,
+    marginTop: 2,
+    marginBottom: 2,
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 13,
     borderColor: 'gray',
     borderRadius: 7,
     borderWidth: 1
@@ -87,7 +94,10 @@ const styles = StyleSheet.create({
   textarea_field: { 
     height: 80,
     borderRadius: 7,
-    margin: 10,
+    marginTop: 2,
+    marginBottom: 2,
+    marginLeft: 10,
+    marginRight: 10,
     borderColor: 'gray',
     borderWidth: 1
   },
@@ -102,9 +112,31 @@ class PostDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      comments: [],
       showComments: true,
       modalVisible: false,
+      name: '',
+      email: '',
+      body: ''
     }
+  }
+
+  addComment = () => {
+    let postId = this.props.navigation.state.params.post.id;
+    let comment = {
+      postId: this.props.navigation.state.params.post.id,
+      id : this.props.comments_list.length+1,
+      name : this.state.name,
+      email : this.state.email,
+      body : this.state.body,
+    }
+    this.props.addComment(postId, comment);
+    this.setState({
+      name:'',
+      email:'',
+      body:''
+    });
+    this.setState({ modalVisible: false});
   }
 
   removePost = (postId) => {
@@ -128,6 +160,7 @@ class PostDetails extends Component {
 
   componentDidMount() {
     this.props.fetchCommentsList(this.props.navigation.state.params.post.id)
+    this.setState()
   }
 
   toggleCommentsVisibility = () => {
@@ -135,7 +168,6 @@ class PostDetails extends Component {
   }
 
   render() {
-    console.log(this.props, 'Props');
     return (
       <View style={styles.container}>
         <Modal isVisible={this.state.modalVisible} style={styles.modal}>
@@ -143,9 +175,17 @@ class PostDetails extends Component {
             <Text style={styles.modal_heading}>Add Comment</Text>
             <TextInput
               style={styles.input_field}
-              placeholder="Title"
-              onChangeText={title => this.setState({ title })}
-              value={this.state.title}
+              placeholder="Name"
+              autoCompleteType="name"
+              onChangeText={name => this.setState({ name })}
+              value={this.state.name}
+            />
+            <TextInput
+              style={styles.input_field}
+              placeholder="Email"
+              autoCompleteType="email"
+              onChangeText={email => this.setState({ email })}
+              value={this.state.email}
             />
               <TextInput
               style={styles.textarea_field}
@@ -160,7 +200,7 @@ class PostDetails extends Component {
             <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
             </View>
             <View style={styles.button}>
-            <Button  title="Add"></Button>
+            <Button onPress={() => this.addComment()} title="Add"></Button>
             </View>
             </View>
           </View>
@@ -188,12 +228,6 @@ class PostDetails extends Component {
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item }) => <Text
                     style={styles.comment}
-                    onPress={() =>
-                      this.props.navigation.navigate('PostDetails', {
-                        post: item,
-                        param: this.props.navigation.state.params.item.name,
-                      })
-                    }
                   >{item.name}</Text>}
                 />
                 <Button onPress={() => {
@@ -210,6 +244,7 @@ class PostDetails extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addComment: (postId,comment) => dispatch(postDetailsActions.addComment(postId,comment)),
     fetchCommentsList: (postId) => dispatch(postDetailsActions.fetchCommentsList(postId)),
     deletePost: (postId) => dispatch(postDetailsActions.deletePost(postId)),
   }
