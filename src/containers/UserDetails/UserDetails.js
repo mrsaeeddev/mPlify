@@ -7,6 +7,7 @@ import {
   Text,
   FlatList,
   Button,
+  Alert,
   TextInput,
   ActivityIndicator,
   StyleSheet
@@ -88,6 +89,29 @@ class UserDetails extends Component {
     }
   }
 
+
+  addPost = () => {
+    let userId = this.props.navigation.state.params.item.id;
+    let post = {
+      userId: userId,
+      id : this.props.posts_list.length+1,
+      title : this.state.title,
+      body : this.state.body,
+    }
+    if (post.userId == "" || post.id == "" || post.title == "" || post.body == "") {
+      Alert.alert("Please fill all the fields");
+    } 
+    else {
+      this.props.addPost(userId, post);
+      this.setState({
+        title:'',
+        body:''
+      });
+      this.setState({ modalVisible: false});
+    }
+  
+  }
+
   componentDidMount() {
     this.props.fetchPostsList(this.props.navigation.state.params.item.id)
   }
@@ -122,7 +146,7 @@ class UserDetails extends Component {
             <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
             </View>
             <View style={styles.button}>
-            <Button  title="Add"></Button>
+            <Button onPress={() => this.addPost()} title="Add"></Button>
             </View>
             </View>
           </View>
@@ -154,12 +178,12 @@ class UserDetails extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addPost: (userId,post) => dispatch(userDetailsActions.addPost(userId,post)),
     fetchPostsList: (userId) => dispatch(userDetailsActions.fetchPostsList(userId))
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('State', state);
   let posts_list = state.userDetailsReducer.posts_list;
   return { posts_list }
 };

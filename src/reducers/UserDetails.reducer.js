@@ -4,6 +4,9 @@ const initialstate = {
     postsListRequest: false,
     postsListSuccess: false,
     postsListFailure: false,
+    addPostRequest: false,
+    addPostSuccess: false,
+    addPostFailure: false,
     loading: false,
     posts_list: [],
 };
@@ -36,6 +39,32 @@ export function userDetailsReducer(state = initialstate, action) {
                 postsListSuccess: false,
                 postsListFailure: true,
                 posts_list: action.posts_list,
+            };
+        case userDetailsConstants.ADD_POST_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                addPostRequest: true,
+                addPostSuccess: false,
+                addPostFailure: false,
+            };
+        case userDetailsConstants.ADD_POST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                addPostRequest: false,
+                addPostSuccess: true,
+                addPostFailure: false,
+                post_response: action.post_response,
+            };
+        case userDetailsConstants.ADD_POST_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                addPostRequest: false,
+                addPostSuccess: false,
+                addPostFailure: true,
+                post_response: action.post_response,
             };
         default:
             return state;

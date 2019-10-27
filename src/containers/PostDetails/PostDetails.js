@@ -130,13 +130,19 @@ class PostDetails extends Component {
       email : this.state.email,
       body : this.state.body,
     }
-    this.props.addComment(postId, comment);
-    this.setState({
-      name:'',
-      email:'',
-      body:''
-    });
-    this.setState({ modalVisible: false});
+
+    if (comment.postId == "" || comment.id == "" || comment.name == "" || comment.email == "" || comment.email == "") {
+      Alert.alert("Please fill all fields");
+    }
+    else {
+      this.props.addComment(postId, comment);
+      this.setState({
+        name:'',
+        email:'',
+        body:''
+      });
+      this.setState({ modalVisible: false});
+    }
   }
 
   removePost = (postId) => {
