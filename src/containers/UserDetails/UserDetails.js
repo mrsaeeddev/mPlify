@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { userDetailsActions } from '../../actions/UserDetails.action';
+import Modal from 'react-native-modal';
 import {
   View,
   Text,
@@ -32,7 +33,18 @@ comments_link : {
   textDecorationStyle: "solid",
   textDecorationColor: "blue",
   color:'blue',
-}
+},
+modal_heading: {
+  margin: 10,
+  fontSize: 24,
+  fontWeight: '700',
+},
+modal: {
+  width: 320,
+  height: '50%',
+  margin: 20,
+  backgroundColor: 'white',
+},
 });
 
 class UserDetails extends Component {
@@ -42,14 +54,31 @@ class UserDetails extends Component {
     };
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible: false,
+    }
+  }
+
   componentDidMount() {
     this.props.fetchPostsList(this.props.navigation.state.params.item.id)
   }
+
+  toggleModal = (status) => {
+    this.setState({modalVisible: status});
+}
 
   render() {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
+         <Modal isVisible={this.state.modalVisible} style={styles.modal}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.modal_heading}>Add Post</Text>
+            <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
+          </View>
+        </Modal>
         {this.props.posts_list.length > 0 ? 
            <><FlatList
            data={this.props.posts_list}
@@ -65,7 +94,9 @@ class UserDetails extends Component {
            <Text style={styles.comments_link}>See comments</Text>    
            </View>}
          />
-        <Button title="Add Post" /></>
+        <Button onPress={() => {
+            this.toggleModal(true);
+          }} title="Add Post" /></>
         :  <ActivityIndicator size="large"  color="#2189dc" />
         }
       </View>

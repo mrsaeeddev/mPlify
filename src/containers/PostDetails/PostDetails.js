@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import ModalComponent from '../../components/Modal/Modal'
+import Modal from 'react-native-modal';
 
 import {
   View,
@@ -12,9 +12,21 @@ import {
   Alert,
   Button
 } from 'react-native';
+
 import { postDetailsActions } from '../../actions/PostDetails.action';
 
 const styles = StyleSheet.create({
+  modal_heading: {
+    margin: 10,
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  modal: {
+    width: 320,
+    height: '50%',
+    margin: 20,
+    backgroundColor: 'white',
+  },
   container: {
     backgroundColor: "#c2d9ea",
     height: "100%",
@@ -93,8 +105,8 @@ class PostDetails extends Component {
     );
   }
 
-  addComment = (visible) => {
-      this.setState({modalVisible: visible});
+  toggleModal = (status) => {
+      this.setState({modalVisible: status});
   }
 
   componentDidMount() {
@@ -109,7 +121,12 @@ class PostDetails extends Component {
     console.log(this.props, 'Props');
     return (
       <View style={styles.container}>
-        <ModalComponent modalVisible={this.state.modalVisible} />
+        <Modal isVisible={this.state.modalVisible} style={styles.modal}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.modal_heading}>Add Comment</Text>
+            <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
+          </View>
+        </Modal>
         <View style={styles.post_details}>
           <Text style={styles.post_heading}>{this.props.navigation.state.params.post.title}</Text>
           <Text>{this.props.navigation.state.params.post.body}</Text>
@@ -142,7 +159,7 @@ class PostDetails extends Component {
                   >{item.name}</Text>}
                 />
                 <Button onPress={() => {
-            this.addComment(true);
+            this.toggleModal(true);
           }} title="Add comment" ></Button>
               </View>
               : <ActivityIndicator style={styles.loader} size="large" color="#2189dc" />
