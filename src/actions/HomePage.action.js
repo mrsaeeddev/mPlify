@@ -19,8 +19,7 @@ function fetchUsersList() {
     function request() {
       return { type: homePageConstants.USER_LIST_REQUEST };
     }
-    function success(user_list) {
-      console.log(user_list,'RRRR')
+    function success(user_list){
       return { type: homePageConstants.USER_LIST_SUCCESS, user_list };
     }
     function failure(user_list) {
