@@ -47,14 +47,14 @@ const styles = StyleSheet.create({
     marginTop: 30,
     backgroundColor: 'white',
   },
-  input_field: { 
+  input_field: {
     height: 40,
     margin: 10,
     borderColor: 'gray',
     borderRadius: 7,
     borderWidth: 1
   },
-  textarea_field: { 
+  textarea_field: {
     height: 80,
     borderRadius: 7,
     margin: 10,
@@ -94,22 +94,22 @@ class UserDetails extends Component {
     let userId = this.props.navigation.state.params.item.id;
     let post = {
       userId: userId,
-      id : this.props.posts_list.length+1,
-      title : this.state.title,
-      body : this.state.body,
+      id: this.props.posts_list.length + 1,
+      title: this.state.title,
+      body: this.state.body,
     }
     if (post.userId == "" || post.id == "" || post.title == "" || post.body == "") {
       Alert.alert("Please fill all the fields");
-    } 
+    }
     else {
       this.props.addPost(userId, post);
       this.setState({
-        title:'',
-        body:''
+        title: '',
+        body: ''
       });
-      this.setState({ modalVisible: false});
+      this.setState({ modalVisible: false });
     }
-  
+
   }
 
   componentDidMount() {
@@ -133,21 +133,21 @@ class UserDetails extends Component {
               onChangeText={title => this.setState({ title })}
               value={this.state.title}
             />
-              <TextInput
+            <TextInput
               style={styles.textarea_field}
               placeholder="Body"
               multiline={true}
-           numberOfLines={6}
+              numberOfLines={6}
               onChangeText={body => this.setState({ body })}
               value={this.state.body}
             />
             <View style={styles.btn_container}>
-            <View style={styles.button}>
-            <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
-            </View>
-            <View style={styles.button}>
-            <Button onPress={() => this.addPost()} title="Add"></Button>
-            </View>
+              <View style={styles.button}>
+                <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
+              </View>
+              <View style={styles.button}>
+                <Button onPress={() => this.addPost()} title="Add"></Button>
+              </View>
             </View>
           </View>
         </Modal>
@@ -178,7 +178,7 @@ class UserDetails extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addPost: (userId,post) => dispatch(userDetailsActions.addPost(userId,post)),
+    addPost: (userId, post) => dispatch(userDetailsActions.addPost(userId, post)),
     fetchPostsList: (userId) => dispatch(userDetailsActions.fetchPostsList(userId))
   }
 }

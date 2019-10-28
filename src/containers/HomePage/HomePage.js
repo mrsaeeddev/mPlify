@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: 'center',
     alignItems: 'center',
-    alignContent:"center",
+    alignContent: "center",
   },
 
-  button : {
+  button: {
     backgroundColor: '#2189dc',
     borderColor: 'white',
     borderWidth: 0,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     overflow: 'hidden',
     padding: 3,
-    textAlign:'center'
+    textAlign: 'center'
   }
 });
 
@@ -55,14 +55,14 @@ class HomePage extends Component {
           source={require('../../assets/images/icon.png')}
         />
         <TouchableOpacity style={styles.button}>
-        <Button
-          title="GET STARTED"
-          onPress={() =>
-            this.props.navigation.navigate('UserList', {
-              count: this.props.count,
-            })
-          }
-        ></Button>
+          <Button
+            title="GET STARTED"
+            onPress={() =>
+              this.props.navigation.navigate('UserList', {
+                count: this.props.count,
+              })
+            }
+          ></Button>
         </TouchableOpacity>
       </View>
     )

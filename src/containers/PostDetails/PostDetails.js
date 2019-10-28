@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: "center",
   },
-  input_field: { 
+  input_field: {
     height: 35,
     marginTop: 2,
     marginBottom: 2,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 1
   },
-  textarea_field: { 
+  textarea_field: {
     height: 80,
     borderRadius: 7,
     marginTop: 2,
@@ -125,10 +125,10 @@ class PostDetails extends Component {
     let postId = this.props.navigation.state.params.post.id;
     let comment = {
       postId: this.props.navigation.state.params.post.id,
-      id : this.props.comments_list.length+1,
-      name : this.state.name,
-      email : this.state.email,
-      body : this.state.body,
+      id: this.props.comments_list.length + 1,
+      name: this.state.name,
+      email: this.state.email,
+      body: this.state.body,
     }
 
     if (comment.postId == "" || comment.id == "" || comment.name == "" || comment.email == "" || comment.email == "") {
@@ -137,11 +137,11 @@ class PostDetails extends Component {
     else {
       this.props.addComment(postId, comment);
       this.setState({
-        name:'',
-        email:'',
-        body:''
+        name: '',
+        email: '',
+        body: ''
       });
-      this.setState({ modalVisible: false});
+      this.setState({ modalVisible: false });
     }
   }
 
@@ -161,7 +161,7 @@ class PostDetails extends Component {
   }
 
   toggleModal = (status) => {
-      this.setState({modalVisible: status});
+    this.setState({ modalVisible: status });
   }
 
   componentDidMount() {
@@ -193,21 +193,21 @@ class PostDetails extends Component {
               onChangeText={email => this.setState({ email })}
               value={this.state.email}
             />
-              <TextInput
+            <TextInput
               style={styles.textarea_field}
               placeholder="Body"
               multiline={true}
-           numberOfLines={6}
+              numberOfLines={6}
               onChangeText={body => this.setState({ body })}
               value={this.state.body}
             />
             <View style={styles.btn_container}>
-            <View style={styles.button}>
-            <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
-            </View>
-            <View style={styles.button}>
-            <Button onPress={() => this.addComment()} title="Add"></Button>
-            </View>
+              <View style={styles.button}>
+                <Button onPress={() => this.toggleModal(false)} title="Cancel"></Button>
+              </View>
+              <View style={styles.button}>
+                <Button onPress={() => this.addComment()} title="Add"></Button>
+              </View>
             </View>
           </View>
         </Modal>
@@ -237,8 +237,8 @@ class PostDetails extends Component {
                   >{item.name}</Text>}
                 />
                 <Button onPress={() => {
-            this.toggleModal(true);
-          }} title="Add comment" ></Button>
+                  this.toggleModal(true);
+                }} title="Add comment" ></Button>
               </View>
               : <ActivityIndicator style={styles.loader} size="large" color="#2189dc" />
             }
@@ -250,7 +250,7 @@ class PostDetails extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addComment: (postId,comment) => dispatch(postDetailsActions.addComment(postId,comment)),
+    addComment: (postId, comment) => dispatch(postDetailsActions.addComment(postId, comment)),
     fetchCommentsList: (postId) => dispatch(postDetailsActions.fetchCommentsList(postId)),
     deletePost: (postId) => dispatch(postDetailsActions.deletePost(postId)),
   }

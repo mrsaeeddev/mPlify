@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    alignContent:"center",
+    alignContent: "center",
   },
   user_list_item: {
     marginTop: 5,
@@ -55,22 +55,22 @@ class UserList extends Component {
       <View style={styles.container}>
         {
           this.props.user_list.length > 0 ? <FlatList
-          data={this.props.user_list}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => <TouchableOpacity style={styles.user_list_item}>
-            <Image 
-              style={styles.image}
-              source={require('../../assets/images/user.png')}
-            />
-            <Text>{item.name}</Text><View style={styles.button}><Button title="View Posts" onPress={() =>
-              this.props.navigation.navigate('UserDetails', {
-                item: item,
-                param: item.name,
-              })
-            }></Button></View></TouchableOpacity>}
-        /> :  <ActivityIndicator size="large"  color="#2189dc" />
+            data={this.props.user_list}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => <TouchableOpacity style={styles.user_list_item}>
+              <Image
+                style={styles.image}
+                source={require('../../assets/images/user.png')}
+              />
+              <Text>{item.name}</Text><View style={styles.button}><Button title="View Posts" onPress={() =>
+                this.props.navigation.navigate('UserDetails', {
+                  item: item,
+                  param: item.name,
+                })
+              }></Button></View></TouchableOpacity>}
+          /> : <ActivityIndicator size="large" color="#2189dc" />
         }
-        </View>
+      </View>
     )
   }
 }

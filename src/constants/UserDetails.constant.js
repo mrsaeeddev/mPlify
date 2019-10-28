@@ -7,5 +7,5 @@ export const userDetailsConstants = {
     ADD_POST_REQUEST: 'ADD_POST_REQUEST',
     ADD_POST_SUCCESS: 'ADD_POST_SUCCESS',
     ADD_POST_FAILURE: 'ADD_POST_FAILURE',
-    
+
 };
